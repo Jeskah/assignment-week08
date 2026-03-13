@@ -1,5 +1,6 @@
 import db from "utils/db.js/page"
 import Image from "next/image"
+import ChatBox from "@/components/ChatBox"
 
 export default async function Artist({ params }) {
 
@@ -36,6 +37,8 @@ return (
     <p className="mt-4">{artist.year}</p>
     <p className="mt-4">{artist.bio}</p>
     <p>Rank:{artist.rank}</p>
+
+    <ChatBox artistId={id}/>
 
     </div>
 )
