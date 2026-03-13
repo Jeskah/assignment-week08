@@ -1,26 +1,74 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
+  --background: #9ec04e;
   --foreground: #171717;
-}
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  letter-spacing: 0.2;
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    --color-brag: #5a556b;
+    --background: #151418;
+    --foreground: #bed1db;
   }
 }
 
+.border-b-1 {
+  border-bottom-width: 0.5px;
+}
+
+Link:hover {
+  transform: scale3d(2px);
+  color: rgb(140, 145, 150);
+}
+
+
 body {
   background: var(--background);
-  color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
+  color: #555859;
+
+h1 {  
+  font-size: 40px;
+    text-transform: uppercase;
+    font-weight: 1000;
+    color: var(--color-brag)
+}
+
+h2 {
+  font-size:27px;  
+  font-weight: 800;
+  text-transform: uppercase;
+  color: var(--color-brag)
+}
+
+h3 {
+  font-size:20px;  
+  text-transform: uppercase;
+}
+
+h4 {
+  font-size:15px;  
+  text-transform: uppercase;
+}
+
+h5 {
+  font-size:10px;  
+  text-transform: uppercase;
+}
+
+h6 {
+  font-size:8px;
+  color: rgb(206, 206, 206);
+  text-transform: uppercase;
+}
+
+button {
+  text-transform: uppercase;
+  font-size: 8pt;
+  /* border: 2px solid black; */
+}
+
 }
