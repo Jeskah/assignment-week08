@@ -17,29 +17,32 @@ if (!artist) {
     return <div className="p-8">Artist not found</div>
 }
 
-console.log("PARAMS:", params)
+// console.log("PARAMS:", params)
 console.log("ID:", id)
 console.log("NUMBER ID:", Number(id))
 
 return (
-    <div className="p-8">
+    <div className="flex flex-col p-10 items-center">
 
     <h2>{artist.name}</h2>
 
     <Image
         src={artist.img_url}
-        className="w-80 mt-4"
+        className="mt-4"
         width={300}
         height={300}
         alt="image"
     />
 
-    <p className="mt-4">{artist.year}</p>
-    <p className="mt-4">{artist.bio}</p>
+<div className="p-15">
+    <p>{artist.year}</p>
+    <p>{artist.bio}</p>
     <p>Rank:{artist.rank}</p>
+</div>
 
     <ChatBox artistId={id}/>
+</div>
 
-    </div>
+
 )
 }

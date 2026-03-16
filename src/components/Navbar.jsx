@@ -9,7 +9,7 @@ export default function Navbar() {
                 alt="brag logo" 
                 width={150} 
                 height={150}
-                className="pb-10 pt-10 scroll-pt-0.5"
+                className="pb-10 pt-5 scroll-pt-0.5"
                 />
 
             <div className="px-2 py-1 uppercase flex gap-5">

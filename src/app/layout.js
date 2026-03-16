@@ -17,10 +17,10 @@ export default function RootLayout({ children }) {
         <ClerkProvider>
           <header className="w-full h-auto flex flex-col">
 
-              <div className="flex gap-7 p-4 pt-0">
+              <div className="flex gap-7 p-4 pb-10 pt-0">
                 <SignInButton />
                   <SignUpButton>
-                    <button className="bg-[#5a556b] text-white font-light h-10 sm:h-6 px-2 sm:px-3 rounded-b-sm cursor-pointer"
+                    <button className="bg-[#5a556b] text-white font-light h-7 sm:h-5 px-2 sm:px-3 rounded-b-sm cursor-pointer"
                     >
                     Sign Up
                   </button>

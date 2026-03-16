@@ -15,9 +15,9 @@
   }
 }
 
-.border-b-1 {
+/* .border-b-1 {
   border-bottom-width: 0.5px;
-}
+} */
 
 Link:hover {
   transform: scale3d(2px);
