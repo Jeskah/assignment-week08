@@ -12,11 +12,11 @@ const query = artistId
       FROM messages
       JOIN braggers ON messages.bragger_id = braggers.id
       WHERE artist_id = $1
-      ORDER BY messages.id ASC`
+      ORDER BY messages.id DESC`
     : `SELECT messages.*, braggers.username
       FROM messages
       JOIN braggers ON messages.bragger_id = braggers.id
-      ORDER BY messages.id ASC`;
+      ORDER BY messages.id DESC`;
 
     const params = artistId ? [artistId] : [];
 

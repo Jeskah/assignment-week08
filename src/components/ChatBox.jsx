@@ -1,6 +1,7 @@
 'use client'
 
 import { useEffect, useState } from "react";
+import Image from "next/image";
 
 export default function Chatbox({ artistId }) {
 const [messages, setMessages] = useState([]);
@@ -46,24 +47,39 @@ try {
 }
 
 return (
+
+    <div className="flex flex-col items-center">
+        <h4 className="pb-5             text-center">
+            <Image 
+            src="/brag.png" 
+            alt="brag logo" 
+            width={110} 
+            height={110}
+            className=" pb-2 scroll-pt-0.5"
+            /><strong>about it</strong>
+        </h4>
+    
 <div className="flex flex-col border-2 rounded-2xl">
-    <div className="flex flex-col gap-3 p-4.5" style={{ maxHeight: 200, overflowY: "auto" }}>
+
+    <div className="flex flex-col-reverse gap-3 p-4.5 bg-mauve-800 overflow-hidden rounded-t-2xl" style={{ maxHeight: 200, overflowY: "auto" }}>
+
     {messages.length === 0 ? (
         <p>No messages yet</p>
     ) : (
         messages.map((msg) => (
         <div key={msg.username}>
-            <div className="text-mauve-500 flex flex-row items-center gap-1"><strong>{msg.username}</strong>
+            <div className="text-mauve-600 flex flex-row items-center gap-1"><strong>{msg.username}</strong>
             <p className="text-xs italic text-mauve-600">bragged!</p>
             </div> 
                 
             <div className="text-sm"> {msg.content} </div>
+            
         </div>
         ))
     )}
     </div>
 
-<div className="flex flex-row flex-wrap justify-items-start text-mauve-500 items-center h-20 gap-30 p-10 mt-10">
+<div className="flex flex-row flex-wrap justify-items-start text-mauve-500 items-center h-20 gap-30 p-10">
     <textarea
     type="text"
     value={newMessage}
@@ -71,10 +87,15 @@ return (
     placeholder="Brag, Post, Boast..."
     className="pt-4 justify-center border-t w-full h-20 object-contain flex-wrap"
     />
+    
 </div>
-<div className="flex flex-col p-10 items-right mt-10">
-    <button className="border rounded-lg p-4 cursor-pointer" onClick={sendMessage}>Brag!</button>
-</div>
+        <div className="flex flex-col p-10 items-right mt-10">
+
+        <button className="border rounded-lg p-4 cursor-pointer" onClick={sendMessage}>Brag!</button>
+
+        </div>
+    </div>
 </div>
 );
+
 }
