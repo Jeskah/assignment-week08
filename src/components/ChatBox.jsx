@@ -88,8 +88,8 @@ return (
     <strong>about it</strong>
     </h4>
 
-    <div className="flex flex-col border-2 rounded-2xl w-full max-w-md">
-    <div className="flex flex-col gap-3 p-4.5 bg-mauve-800 overflow-y-auto rounded-t-2xl" style={{ maxHeight: 200 }}>
+    <div className="flex flex-col border-2 rounded-2xl w-full">
+    <div className="flex flex-col flex-wrap-col gap-3 p-4.5 bg-mauve-800 overflow-y-auto no-scrollbar rounded-t-2xl" style={{ maxHeight: 200 }}>
         {messages.length === 0 ? (
         <p>No messages yet</p>
         ) : (
