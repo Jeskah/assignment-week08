@@ -8,13 +8,14 @@ export default async function Artists() {
     const artists = result.rows
     
     return (
-    <div className="flex flex-wrap gap-10 justify-center items-center p-8">
+    <div className="flex flex-col flex-wrap gap-10 justify-center items-center p-8">
 
             <h2>browse all artists</h2>
-
+        <div className="flex flex-row flex-wrap w-full justify-center gap-10">
             {artists.map((artist) => (
             <ArtistCard key={artist.id} artist={artist} />
             ))}
         </div>
+    </div>
     )
 }

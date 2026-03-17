@@ -1,9 +1,12 @@
-'use client'
+"use client"
 
 import { useEffect, useState } from "react";
 import Image from "next/image";
+import { useUser, useAuth } from "@clerk/nextjs";
 
 export default function Chatbox({ artistId }) {
+const { user } = useUser();
+console.log(user?.id)
 const [messages, setMessages] = useState([]);
 const [newMessage, setNewMessage] = useState("");
 
@@ -22,80 +25,90 @@ async function fetchMessages() {
 fetchMessages();
 }, [artistId]);
 
-// Send a new message
-async function sendMessage() {
-if (!newMessage.trim()) return;
+    async function fetchMessages() {
+    try {
+        const res = await fetch(`/api/messages?artistId=${artistId}`);
+        const data = await res.json();
+        setMessages(Array.isArray(data) ? data : []);
+    } catch (err) {
+        console.error("Failed to fetch messages:", err);
+    }
+    }
 
+    async function sendMessage() {
+    if (!newMessage.trim()) return;
+
+    try {
+        const res = await fetch("/api/messages", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        credentials: "include",
+        body: JSON.stringify({ content: newMessage, artistId }),
+        });
+
+        if (!res.ok) throw new Error(await res.text());
+        setNewMessage("");
+        await fetchMessages();
+    } catch (err) {
+        console.error(err);
+    }
+    }
+
+async function deleteMessage(id) {
 try {
     const res = await fetch("/api/messages", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({
-        content: newMessage,
-        artistId,
-        braggerId: 1, // replace with Clerk user ID later
-        credentials: "include"
-    }),
+    method: "DELETE",
+    headers: { 
+        "Content-Type": "application/json" },
+    credentials: "include",
+    body: JSON.stringify({ messageId: id }),
     });
-
     const data = await res.json();
-    if (data) setMessages((prev) => [...prev, data]);
-    setNewMessage("");
+    if (data.success) setMessages((prev) => prev.filter(m => m.id !== id));
 } catch (err) {
     console.error(err);
 }
 }
 
 return (
+<div className="flex flex-col items-center">
+    <h4 className="pb-5 text-center">
+    <Image src="/brag.png" alt="brag logo" width={110} height={110} />
+    <strong>about it</strong>
+    </h4>
 
-    <div className="flex flex-col items-center">
-        <h4 className="pb-5             text-center">
-            <Image 
-            src="/brag.png" 
-            alt="brag logo" 
-            width={110} 
-            height={110}
-            className=" pb-2 scroll-pt-0.5"
-            /><strong>about it</strong>
-        </h4>
-    
-<div className="flex flex-col border-2 rounded-2xl">
-
-    <div className="flex flex-col-reverse gap-3 p-4.5 bg-mauve-800 overflow-hidden rounded-t-2xl" style={{ maxHeight: 200, overflowY: "auto" }}>
-
-    {messages.length === 0 ? (
+    <div className="flex flex-col border-2 rounded-2xl w-full max-w-md">
+    <div className="flex flex-col gap-3 p-4.5 bg-mauve-800 overflow-y-auto rounded-t-2xl" style={{ maxHeight: 200 }}>
+        {messages.length === 0 ? (
         <p>No messages yet</p>
-    ) : (
-        messages.map((msg) => (
-        <div key={msg.username}>
-            <div className="text-mauve-600 flex flex-row items-center gap-1"><strong>{msg.username}</strong>
-            <p className="text-xs italic text-mauve-600">bragged!</p>
-            </div> 
-                
-            <div className="text-sm"> {msg.content} </div>
-            
-        </div>
+        ) : (
+        messages.map(msg => (
+            <div key={msg.id} className="border-b border-mauve-600 pb-2">
+            <div className="flex justify-between items-center">
+                <div className="text-mauve-600"><strong>{msg.username}</strong> <span className="italic text-xs">bragged!</span></div>
+                {user?.id === msg.bragger_id && (
+                <button className="text-red-400 text-xs" onClick={() => deleteMessage(msg.id)}>Delete</button>
+                )}
+            </div>
+            <div className="text-sm">{msg.content}</div>
+            </div>
         ))
-    )}
+        )}
     </div>
 
-<div className="flex flex-row flex-wrap justify-items-start text-mauve-500 items-center h-20 gap-30 p-10">
-    <textarea
-    type="text"
-    value={newMessage}
-    onChange={(e) => setNewMessage(e.target.value)}
-    placeholder="Brag, Post, Boast..."
-    className="pt-4 justify-center border-t w-full h-20 object-contain flex-wrap"
-    />
-    
-</div>
-        <div className="flex flex-col p-10 items-right mt-10">
+    <div className="flex flex-row flex-wrap justify-items-start text-mauve-500 items-center h-20 gap-30 p-4">
+        <textarea
+        value={newMessage}
+        onChange={e => setNewMessage(e.target.value)}
+        placeholder="Brag, Post, Boast..."
+        className="w-full h-20 p-2 border-t resize-none"
+        />
+    </div>
 
-        <button className="border rounded-lg p-4 cursor-pointer" onClick={sendMessage}>Brag!</button>
-
-        </div>
+    <div className="flex justify-end p-4">
+        <button className="border rounded-lg p-2 cursor-pointer" onClick={sendMessage}>Brag!</button>
+    </div>
     </div>
 </div>
 );
-
 }
