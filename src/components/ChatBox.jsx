@@ -1,6 +1,6 @@
 "use client"
 
-import { useEffect, useState } from "react";
+import { useRef, useEffect, useState } from "react";
 import Image from "next/image";
 import { useUser, useAuth } from "@clerk/nextjs";
 
@@ -9,6 +9,15 @@ const { user } = useUser();
 console.log(user?.id)
 const [messages, setMessages] = useState([]);
 const [newMessage, setNewMessage] = useState("");
+const messagesEndRef = useRef(null);
+const scrollBottom = () => {
+    messagesEndRef.current?.scrollIntoView({ behavior: "smooth"});
+};
+
+useEffect(() => {
+    scrollBottom();
+ }, [messages]);
+
 
 useEffect(() => {
 async function fetchMessages() {
@@ -55,6 +64,8 @@ fetchMessages();
     }
 
 async function deleteMessage(id) {
+
+    if (!confirm("Are you sure you want to delete this message?")) return;
 try {
     const res = await fetch("/api/messages", {
     method: "DELETE",
@@ -83,7 +94,7 @@ return (
         <p>No messages yet</p>
         ) : (
         messages.map(msg => (
-            <div key={msg.id} className="border-b border-mauve-600 pb-2">
+            <div key={msg.id} className=" border-mauve-600 pb-2">
             <div className="flex justify-between items-center">
                 <div className="text-mauve-600"><strong>{msg.username}</strong> <span className="italic text-xs">bragged!</span></div>
                 {user?.id === msg.bragger_id && (
@@ -94,6 +105,7 @@ return (
             </div>
         ))
         )}
+        <div ref={messagesEndRef} />
     </div>
 
     <div className="flex flex-row flex-wrap justify-items-start text-mauve-500 items-center h-20 gap-30 p-4">

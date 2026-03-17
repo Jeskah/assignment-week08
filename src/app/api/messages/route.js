@@ -91,7 +91,7 @@ export async function DELETE(req) {
     }
 
     // Optional: verify user is owner before deleting
-    const { userId } = auth() || {};
+    const { userId } = getAuth(req) || {};
     if (!userId) {
       return new Response(JSON.stringify({ error: "Not authenticated" }), {
         status: 401,
