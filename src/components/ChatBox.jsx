@@ -89,7 +89,7 @@ return (
     </h4>
 
     <div className="flex flex-col border-2 rounded-2xl w-full">
-    <div className="flex flex-col flex-wrap-col gap-3 p-4.5 bg-mauve-800 overflow-y-auto no-scrollbar rounded-t-2xl" style={{ maxHeight: 200 }}>
+    <div className="flex flex-col flex-wrap-col gap-3 p-4.5 bg-mauve-800 overflow-y-auto no-scrollbar rounded-t-2xl sticky bottom-0" style={{ maxHeight: 200 }}>
         {messages.length === 0 ? (
         <p>No messages yet</p>
         ) : (
@@ -113,12 +113,12 @@ return (
         value={newMessage}
         onChange={e => setNewMessage(e.target.value)}
         placeholder="Brag, Post, Boast..."
-        className="w-full h-20 p-2 border-t resize-none"
+        className="w-full h-20 p-2 resize-none focus:outline-none focus:ring-2 focus:ring-mauve-800"
         />
     </div>
 
     <div className="flex justify-end p-4">
-        <button className="border rounded-lg p-2 cursor-pointer" onClick={sendMessage}>Brag!</button>
+        <button className="border rounded-lg p-2 mt-5 cursor-pointer" onClick={sendMessage}>Brag!</button>
     </div>
     </div>
 </div>
