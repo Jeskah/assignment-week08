@@ -7,9 +7,9 @@ export default async function Artists() {
   const artists = result.rows;
 
   return (
-    <div className="flex flex-col items-center overflow-scroll">
+    <div className="flex flex-col items-center overflow-y-auto no-scrollbar">
 
-            <h5 className="pb-10 pt-5 text-center">Discover New Favourites...</h5>
+            <h4 className="pb-10 pt-5 text-center text-mauve-500">Discover New Favourites...</h4>
 
     <div className="flex flex-row gap-10 items-center cursor-pointer pb-50">
 
